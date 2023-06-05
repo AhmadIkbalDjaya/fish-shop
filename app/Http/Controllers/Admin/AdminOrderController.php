@@ -29,6 +29,8 @@ class AdminOrderController extends Controller
      */
     public function show(Order $order)
     {
+        $order->fishs_id = json_decode($order->fishs_id);
+        // dd($order);
         return view("admin.order.show", [
             "title" => "Detail Order",
             "order" => $order,

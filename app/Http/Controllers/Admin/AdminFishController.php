@@ -44,11 +44,11 @@ class AdminFishController extends Controller
     {
         $validated = $request->validate([
             "name" => "required|string",
-            "price" => "required|number",
+            "price" => "required|numeric",
             "image" => "required|image",
         ]);
 
-        $validated["image"] = $$request->file('image')->store('fish');
+        $validated["image"] = $request->file('image')->store('fish');
         Fish::create($validated);
         return redirect()->route("admin.fish.index")->with("success", "Ikan berhasil di tambahkan");
     }
@@ -92,12 +92,12 @@ class AdminFishController extends Controller
     {
         $validated = $request->validate([
             "name" => "required|string",
-            "price" => "required|number",
+            "price" => "required|numeric",
             "image" => "nullable|image",
         ]);
 
         if ($request->file("image")) {
-            Storage::delete($fish->images);
+            Storage::delete($fish->image);
             $validated["image"] = $request->file('image')->store('fish');
         }
         $fish->update($validated);

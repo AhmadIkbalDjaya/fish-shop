@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('fish', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price');
+            $table->decimal('price', 8, 2);
             $table->string('image');
             $table->timestamps();
         });
