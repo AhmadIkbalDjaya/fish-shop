@@ -95,7 +95,17 @@
                   <tr>
                     <td>Metode Pembayaran</td>
                     <td>:</td>
-                    <td>{{ $order->payment }}</td>
+                    <td>
+                      @if ($order->payment == 1)
+                        BCA
+                      @elseif ($order->payment == 2)
+                        BNI
+                      @elseif ($order->payment == 3)
+                        BRI
+                      @elseif ($order->payment == 4)
+                        Mandiri
+                      @endif
+                    </td>
                   </tr>
                   <tr>
                     <td>Tanggal Pembelian</td>

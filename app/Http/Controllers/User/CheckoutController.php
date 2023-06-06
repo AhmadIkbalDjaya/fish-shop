@@ -15,7 +15,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        $carts = Cart::where('user_id', "1")->get();
+        $carts = Cart::where('user_id', Auth()->user()->id)->get();
         $total_price = 0;
         $total_fish = 0;
 
@@ -41,14 +41,13 @@ class CheckoutController extends Controller
             "payment" => "required|numeric|in:1,2,3,4",
             "total" => "required|numeric",
         ]);
-        $validated["user_id"] = "1";
+        $validated["user_id"] = Auth()->user()->id;
         $validated["buy_date"] = Carbon::now()->format('Y-m-d');
         $carts = $request->carts;
         foreach ($carts as $cart) {
             Cart::where('id', $cart)->delete();
         }
         $validated['fishs_id'] = json_encode($validated["fishs_id"]);
-        // dd($validated);
         $order = Order::create($validated);
         
         return redirect()->route('confirmPay', ['order' => $order->id])->with("success", "Checkout berhasil");

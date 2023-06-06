@@ -13,7 +13,7 @@
           <h1>Food Shop</h1>
         </div>
         <div>
-          <img src="../images/food.png" alt="img" style="height : 250px">
+          <img src="{{ asset('/images/fish.png') }}" alt="img" style="height : 250px">
         </div>
         <div class="col-md-12 text-white">
           <h2>Toko Makanan Terbaik</h2>

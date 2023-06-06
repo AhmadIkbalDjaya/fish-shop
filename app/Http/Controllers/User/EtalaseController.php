@@ -11,7 +11,7 @@ class EtalaseController extends Controller
 {
     public function index()
     {
-        $carts = Cart::where('user_id', "1")->get();
+        $carts = Cart::where('user_id', Auth()->user()->id)->get();
         $total_price = 0;
         $total_fish = 0;
 
@@ -33,7 +33,7 @@ class EtalaseController extends Controller
         $validated = $request->validate([
             "fish_id" => "required|exists:fish,id",
         ]);
-        $validated["user_id"] = "1";
+        $validated["user_id"] = Auth()->user()->id;
         Cart::create($validated);
         if ($request->checkout) {
             return redirect()->route('checkout')->with("success", "item berhasil ditambahkan ke keranjang");

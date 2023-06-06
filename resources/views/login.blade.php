@@ -18,15 +18,28 @@
             <div class="col-11 col-md-5">
               <div class="login-box">
                 <p>Login</p>
-                <p style="color: red; font-style: italic;" class="text-center">Username / Password Salah!</p>
-                <form action="" method="post">
+                @if (session()->has('loginError'))
+                  <p style="color: red; font-style: italic;" class="text-center">Username / Password Salah!</p>
+                @endif
+                <form action="{{ route('loginProcess') }}" method="post">
+                  @csrf
                   <div class="user-box">
-                    <input required="" name="username" type="text" />
+                    <input required="" name="username" type="text" class="@error('username') is-invalid @enderror" value="{{ old('username') }}"/>
                     <label>Username</label>
+                    @error('username')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
                   </div>
                   <div class="user-box">
-                    <input required="" name="password" type="password" />
+                    <input required="" name="password" type="password" class="@error('password') is-invalid @enderror" value="{{ old('password') }}"/>
                     <label>Password</label>
+                    @error('password')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
                   </div>
                   <button type="submit" name="login">
                     <span></span>
@@ -36,6 +49,12 @@
                     Submit
                   </button>
                 </form>
+                <p class="regist">
+                  Belum Punya Akun?
+                  <a href="{{ route('regis') }}">
+                    Register
+                  </a>
+                </p>
               </div>
             </div>
           </div>

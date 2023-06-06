@@ -16,7 +16,7 @@
                   <p>Tanggal Pembelian</p>
                 </div>
                 <div class="col-12">
-                  <p>20/06/2023</p>
+                  <p>{{ $order->buy_date }}</p>
                 </div>
               </div>
             </div>
@@ -26,7 +26,7 @@
                   <p>Nomor Pesanan</p>
                 </div>
                 <div class="col-12">
-                  <p>983973937</p>
+                  <p>9839739{{ $order->id }}</p>
                 </div>
               </div>
             </div>
@@ -36,12 +36,24 @@
                   <p>Metode Pembayaran</p>
                 </div>
                 <div class="col-12">
-                  <p>BCA</p>
+                  <p>
+                    @if ($order->payment == 1)
+                      BCA
+                    @elseif ($order->payment == 2)
+                      BNI
+                    @elseif ($order->payment == 3)
+                      BRI
+                    @elseif ($order->payment == 4)
+                      Mandiri
+                    @endif
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-3">
-              <div><img src="{{ asset('/images/payment1.png') }}" alt="img" class="img-fluid" /></div>
+              <div>
+                <img src="{{ asset('/images/payment'.$order->payment.'.png') }}" alt="img" class="img-fluid" />
+              </div>
             </div>
           </div>
           <div class="row card shadow p-4 mt-3">
@@ -54,7 +66,7 @@
                       <tr>
                         <td>Jumlah Deposit</td>
                         <td>:</td>
-                        <td>500.000</td>
+                        <td>Rp. {{ number_format($order->total, 0, ',', '.') }}</td>
                       </tr>
                       <tr>
                         <td>Nomor Rekening</td>
@@ -76,7 +88,7 @@
                     <strong>Total Pembayaran</strong>
                   </div>
                   <div class="col-md-6 text-end">
-                    <strong>Rp500.000</strong>
+                    <strong>Rp. {{ number_format($order->total, 0, ',', '.') }}</strong>
                   </div>
                 </div>
               </div>

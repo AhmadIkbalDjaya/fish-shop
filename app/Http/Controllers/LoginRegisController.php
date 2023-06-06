@@ -26,7 +26,7 @@ class LoginRegisController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $request->session()->regenerate();
-            if ($user->level == 1) {
+            if ($user->level == 0) {
                 return redirect()->route('admin.index');
             } else {
                 return redirect()->route('home');
@@ -54,7 +54,8 @@ class LoginRegisController extends Controller
     public function regisProcess(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|string|unique:users',
+            'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
         $validated['password'] = Hash::make($validated['password']);
